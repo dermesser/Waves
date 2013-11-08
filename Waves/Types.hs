@@ -5,19 +5,20 @@ type Distance = Double
 type Wavelength = Double
 type Frequency = Double
 type Phase = Double
+type Velocity = Double
 
 type Time = Double
 type Point = (Double, Double)
 
-data Medium = Medium { getC :: Double -- c (wave velocity)
+data Medium = Medium { getC :: Velocity -- c (wave velocity)
                      , getXdim :: Double -- Width of medium
                      , getYdim :: Double -- Height of Medium
 } deriving Show
 
-data Exciter = Exciter { getLambda :: Double -- Wavelength
-                       , getFrequency :: Double -- Frequency
-                       , getPhi :: Double -- Phi (initial phase delay)
-                       , getAmplitude :: Double -- Amplitude of waves
+data Exciter = Exciter { getLambda :: Wavelength
+                       , getFrequency :: Frequency
+                       , getPhi :: Phase -- Phi (initial phase delay)
+                       , getAmplitude :: Amplitude
                        , getPoint :: Point
 } deriving Show
 
