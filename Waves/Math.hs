@@ -17,10 +17,15 @@ waveAt1d (Exciter wlen freq phi0 maxamp _) x t = maxamp * sin ( (2*pi* ( (t*freq
 
 wave1d :: [Exciter] -> Distance -> Time -> Amplitude
 wave1d exciters s t = foldr1 (+) . map getAmp $ exciters
-    where getAmp e = waveAt1d e s t
+    where getAmp e = if s <= ((getFrequency e) * (getLambda e))  * t
+                     then waveAt1d e s t
+                     else 0
 
 -- 2D interferences
 wave2d :: WaveField -> Point -> Time -> Amplitude
 wave2d (WaveField _medium exciters) p t = foldr1 (+) . map getAmp $ exciters
     where distance e = calcDistance (getPoint e) p
-          getAmp e = waveAt1d e (distance e) t
+          getAmp e = let d = distance e in
+                     if d <= ((getFrequency e) * (getLambda e)) * t
+                     then waveAt1d e (distance e) t
+                     else 0
