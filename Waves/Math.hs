@@ -13,14 +13,6 @@ waveAt1d :: Exciter -> Distance -> Time -> Amplitude
 waveAt1d (Exciter wlen freq phi0 maxamp _) x t = maxamp * sin ( (2*pi* ( (t*freq) - (x/wlen) ) ) + phi0 )
 
 
--- 1D interferences
-
-wave1d :: [Exciter] -> Distance -> Time -> Amplitude
-wave1d exciters s t = foldr1 (+) . map getAmp $ exciters
-    where getAmp e = if s <= ((getFrequency e) * (getLambda e))  * t
-                     then waveAt1d e s t
-                     else 0
-
 -- 2D interferences
 wave2d :: WaveField -> Point -> Time -> Amplitude
 wave2d (WaveField _medium exciters) p t = foldr1 (+) . map getAmp $ exciters
