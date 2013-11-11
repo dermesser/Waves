@@ -19,5 +19,5 @@ wave2d (WaveField _medium exciters) p t = foldr1 (+) . map getAmp $ exciters
     where distance e = calcDistance (getPoint e) p
           getAmp e = let d = distance e in
                      if d <= ((getFrequency e) * (getLambda e)) * t
-                     then waveAt1d e (distance e) t
+                     then waveAt1d e d t
                      else 0
